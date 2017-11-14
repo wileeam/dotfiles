@@ -25,6 +25,8 @@ nvim_create_config_dir:
 nvim_plugins_install:
 	curl -fsSLo $(DOTFILES_NVIM_DIR)/site/autoload/plug.vim --create-dirs \
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	# Spellcheck in nvim requires this brew installation
+	brew install spellcheck
 
 nvim:
 ifneq ($(strip $(BREW_BIN)),)
