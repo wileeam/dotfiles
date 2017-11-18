@@ -1,5 +1,5 @@
 " Custom plugins
-call plug#begin()
+call plug#begin('~/.config/nvim/plugged')
 
 " Indicate added, modified and removed lines managed by VCS :: vim-gitgutter
 " https://github.com/airblade/vim-gitgutter

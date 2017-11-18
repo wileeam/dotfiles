@@ -1,8 +1,8 @@
 # Install and configure Neovim 
 # Requirements: brew
 
-.PHONY: nvim nvim_install nvim_create_config_dir nvim_plugins_install
-.SILENT: nvim_install nvim_create_config_dir nvim_plugins_install
+.PHONY: nvim nvim_install nvim_create_config_dir nvim_plugins_install nvim_config_install
+.SILENT: nvim_install nvim_create_config_dir nvim_plugins_install nvim_config_install
 
 BREW_BIN = $(shell command -v brew 2> /dev/null)
 
@@ -23,14 +23,17 @@ nvim_create_config_dir:
 	mkdir -p $(DOTFILES_NVIM_DIR)
 
 nvim_plugins_install:
-	curl -fsSLo $(DOTFILES_NVIM_DIR)/site/autoload/plug.vim --create-dirs \
+	curl -fsSLo $(DOTFILES_NVIM_DIR)/autoload/plug.vim --create-dirs \
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	# Spellcheck in nvim requires this brew installation
-	brew install spellcheck
+	# brew install spellcheck
+
+nvim_config_install:
+	cp -i vimrc ${DOTFILES_NVIM_DIR}/init.vim
 
 nvim:
 ifneq ($(strip $(BREW_BIN)),)
-nvim: nvim_install nvim_create_config_dir nvim_plugins_install
+nvim: nvim_install nvim_create_config_dir nvim_plugins_install nvim_config_install
 else
 	$(error Homebrew not installed)
 endif
