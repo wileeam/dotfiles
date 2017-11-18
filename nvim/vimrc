@@ -20,6 +20,17 @@ Plug 'othree/html5.vim'
 " https://github.com/w0rp/ale
 Plug 'w0rp/ale'
 
+" Asynchronous keyword completion :: deoplete.nvim
+" https://github.com/Shougo/deoplete.nvim
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Python autocompletion :: jedi-vim
+" https://github.com/davidhalter/jedi-vim
+Plug 'davidhalter/jedi-vim'
+" Python async autocompletion in NVim :: deoplete-jedi
+" https://github.com/zchee/deoplete-jedi
+Plug 'zchee/deoplete-jedi'
+
 " End custom plugins and initialize plugin system
 call plug#end()
 
@@ -44,6 +55,7 @@ colorscheme OceanicNext
 set number
 
 " Enable completion where available.
+" pipenv install python-language-server
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
 \   'python': [
@@ -52,6 +64,7 @@ let g:ale_linters = {
 \}
 
 " And fix
+" pipenv install yapf
 let g:ale_fixers = {
 \   'python': [
 \	'yapf',
@@ -61,3 +74,8 @@ let g:ale_fixers = {
 \}
 " Enable fix on save
 let g:ale_fix_on_save = 1
+
+" Let deoplete-jedi handle async autocompletions
+let g:jedi#completions_enabled = 0
+" Use deoplete for autocompletions
+let g:deoplete#enable_at_startup = 1
