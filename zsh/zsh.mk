@@ -14,7 +14,7 @@ ZSH_BIN = $(shell command -v zsh 2> /dev/null)
 
 ZSH_PREZTO = zprezto
 ZSH_PREZTO_HOME = $(DOTFILES_ZSH_DIR)/.$(ZSH_PREZTO)
-ZSH_PREZTO_FILES = zshenv zprofile zshrc zpreztorc zlogin zlogout
+ZSH_PREZTO_FILES = zlogin zlogout zpreztorc zprofile zshenv zshrc
 
 #print-%  : ; @echo $* = $($*)
 
