@@ -7,20 +7,27 @@
 BREW_BIN = $(shell command -v brew 2> /dev/null)
 
 DOTFILES_HOME ?= ${HOME}
-DOTFILES_DIR = $(DOTFILES_HOME)/.config
-DOTFILES_ZSH_DIR = $(DOTFILES_DIR)/zsh
+DOTFILES_DIR := $(DOTFILES_HOME)/.config
+DOTFILES_ZSH_DIR := $(DOTFILES_DIR)/zsh
 
-ZSH_BIN = $(shell command -v zsh 2> /dev/null)
+ZSH_BIN := $(shell command -v zsh 2> /dev/null)
 
-ZSH_PREZTO = zprezto
-ZSH_PREZTO_HOME = $(DOTFILES_ZSH_DIR)/.$(ZSH_PREZTO)
-ZSH_PREZTO_FILES = zlogin zlogout zpreztorc zprofile zshenv zshrc
+ZSH_PREZTO := zprezto
+ZSH_PREZTO_HOME := $(DOTFILES_ZSH_DIR)/.$(ZSH_PREZTO)
+ZSH_PREZTO_FILES := zlogin zlogout zpreztorc zprofile zshenv zshrc
 
-#print-%  : ; @echo $* = $($*)
+CURRENT_SHELL := $(SHELL)
+DEFAULT_SHELL := $(shell command echo ${0})
+
+# print-%  : ; @echo $* = $($*)
 
 zsh_install:
-ifeq ($(strip $(ZSH_BIN)),)
+ifeq (, $(shell which zsh))
+	# $(error "No zsh in $(PATH), consider doing brew install zsh")
+	@echo "No Z shell installed. Installing..."
 	brew install zsh
+else
+	@echo "Z shell is already installed. Available in your path at $(ZSH_BIN)"
 endif
 
 zsh_prezto_install:
@@ -34,7 +41,7 @@ zsh_prezto_configure:
 zsh_prezto: zsh_prezto_install zsh_prezto_configure
 
 zsh_shell:
-	#sudo echo $(ZSH_BIN) >> /etc/shells
+	# sudo echo $(ZSH_BIN) >> /etc/shells
 	chsh -s $(ZSH_BIN)
 
 zsh:
