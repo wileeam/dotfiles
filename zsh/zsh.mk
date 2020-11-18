@@ -16,8 +16,11 @@ ZSH_PREZTO := zprezto
 ZSH_PREZTO_HOME := $(DOTFILES_ZSH_DIR)/.$(ZSH_PREZTO)
 ZSH_PREZTO_FILES := zlogin zlogout zpreztorc zprofile zshenv zshrc
 
-CURRENT_SHELL := $(SHELL)
-DEFAULT_SHELL := $(shell command echo ${0})
+# Get the parent process' shell: https://stackoverflow.com/a/16948099
+# and split to get the shell's name: https://stackoverflow.com/a/43232900
+DEFAULT_SHELL := $(shell command perl -e 'print((split "/", (getpwuid $$<)[8])[-1], "\n")')
+# Split strings in make: https://stackoverflow.com/a/51405618
+MAKE_SHELL    := $(lastword $(subst /, ,$(SHELL)))
 
 # print-%  : ; @echo $* = $($*)
 
@@ -41,8 +44,13 @@ zsh_prezto_configure:
 zsh_prezto: zsh_prezto_install zsh_prezto_configure
 
 zsh_shell:
+ifeq ($(DEFAULT_SHELL), "zsh")
+	@echo "Setting Z shell as default shell"
 	# sudo echo $(ZSH_BIN) >> /etc/shells
-	chsh -s $(ZSH_BIN)
+	# chsh -s $(ZSH_BIN)
+else
+	@echo "Z shell is already your default shell"
+endif
 
 zsh:
 ifneq ($(strip $(BREW_BIN)),)
