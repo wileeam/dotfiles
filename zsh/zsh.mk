@@ -47,7 +47,7 @@ zsh_shell:
 ifeq ($(DEFAULT_SHELL), "zsh")
 	@echo "Setting Z shell as default shell"
 	# sudo echo $(ZSH_BIN) >> /etc/shells
-	# chsh -s $(ZSH_BIN)
+	chsh -s $(ZSH_BIN)
 else
 	@echo "Z shell is already your default shell"
 endif
